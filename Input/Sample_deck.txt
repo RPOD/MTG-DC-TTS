@@ -1,0 +1,18 @@
+4	Adaptive Automaton
+4	Balduvian Bears
+4	Bear Cub
+4	Coat of Arms
+4	Door of Destinies
+22	Forest
+4	Forest Bear
+4	Golden Bear
+4	Grizzly Bears
+4	Muraganda Petroglyphs
+4	Runeclaw Bear
+
+Sideboard: 
+4	AEther Vial
+4	Alpha Status
+4	Bearscape
+4	Caller of the Claw
+4	Words of Wilding
