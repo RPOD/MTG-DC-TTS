@@ -10,6 +10,8 @@ Class for generating pictures
 import urllib.request
 import os
 import io
+import shutil
+
 from PIL import Image
 
 
@@ -26,7 +28,31 @@ class PictureGenerator:
             try:
                 iurl = urllib.request.urlopen("http://mtgimage.com/card/" + card.name + ".hq.jpg")
             except urllib.request.HTTPError:
-                print ("Please load " + card.name + " manually.")
+                print ("Could not load " + card.name)
+                mode = 'y'
+                while (mode != 'y' or 'n'):
+                    mode = input("Do you want to continue without the card? [y/n]\n")
+                    if (mode == 'y'):
+                        break
+                    if (mode == 'n'):
+                        if not os.path.exists("tmp\\" + card.name):
+                            os.makedirs("tmp\\" + card.name)
+                        input("Please insert the cardimage from http://mtgimage.com/card/" +
+                            card.name + ".jpg into the folder: tmp\\" + card.name + " manually\n\nPress Enter to Continue\n")
+                        while(len(os.listdir("tmp\\" + card.name)) != 1):
+                            input("Please insert just one imagefile.\n\nPress Enter to continue.\n")
+                        tim = Image.open("tmp\\"+ card.name + "\\" + os.listdir("tmp\\" + card.name)[0])
+                        tim = tim.resize((480, 680), Image.ANTIALIAS)
+                        for i in range(int(card.amount)):
+                            grid.paste(tim, (x, y))
+                            x = x + 480
+                            if (x == 4800):
+                                x = 0
+                                y = y + 680
+                        break
+                    else:
+                        print("Please insert y or n.")
+                shutil.rmtree('tmp', ignore_errors=True)
                 continue
             rawfile = io.BytesIO(iurl.read())
             cim = Image.open(rawfile)

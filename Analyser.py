@@ -21,6 +21,8 @@ class Analyser:
         sideboard = 0
         amount = 0
         for line in self.text:
+            if("/ " in line):
+                line = line.replace("/ ", "")
             if('Sideboard' in line):
                 sideboard = 1
                 continue

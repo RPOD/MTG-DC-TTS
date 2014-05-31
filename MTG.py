@@ -7,15 +7,9 @@ This is a little Program which reads MTG-Deck files in from tappedout.net
 and creates a valid picture for Tabletopsimulator in order to load a costum
 deck into the game.
 
-Note for some reason some card images throw a 400 HTTP Error, Pictures will
-be still created though will be incomplete. Check the console output to see
-which cards couldn't be loaded
-
-!!!IMPORTANT NOTE!!!
-
-If a card name contains a \ pleae replace it with just a blank symbol
-For example: Bound \ Determined , it should be Bound Determined
-Please check the .txt filebeforehand
+Note for some reason some card images throw a 400 HTTP Error. If that occours
+the program will prompt if it should be still loaded and ask the user to
+insert the picture manually
 
 ===============================================================================
                                 Main class
@@ -46,36 +40,37 @@ class Mtg:
             mtg = Mtg('Input\\' + entry)
             text = mtg.readInputFile()
             deck = Deck(entry[:-4], [], [], 0)
-            print(deck.name)
+            print("Now creating: " + deck.name + " please wait.\n")
             ana = Analyser(deck, text)
             ana.analyseDeck()
             if(deck.cardAmount < 70):
                 pg = PictureGenerator(deck)
                 pg.createPicture()
             else:
-                i = 1
-                for part in self.chunks(deck):
-                    tmpdeck = Deck(entry[:-4] + str(i), part, [], 0)
-                    pg = PictureGenerator(tmpdeck)
-                    pg.createPicture()
+                self.chunkify(deck)
             if(len(deck.sideboard) != 0):
                 sidedeck = Deck(deck.name + " sideboard", deck.sideboard, [], 0)
                 pg = PictureGenerator(sidedeck)
                 pg.createPicture()
 
-    def chunks(self, deck):
-        chunks = []
+    def chunkify(self, deck):
         part = []
         amount = 0
+        c = 1
         for card in deck.cards:
             amount = amount + int(card.amount)
             if(amount >= 70):
-                chunks.append(part)
+                tmpdeck = Deck(deck.name + str(c), part[:], [], 0)
+                pg = PictureGenerator(tmpdeck)
+                pg.createPicture()
                 part[:] = []
                 amount = 0
+                c = c + 1
             else:
                 part.append(card)
-        return chunks
+        tmpdeck = Deck(deck.name + str(c), part[:], [], 0)
+        pg = PictureGenerator(tmpdeck)
+        pg.createPicture()
 
 
 def main():
