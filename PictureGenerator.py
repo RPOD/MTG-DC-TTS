@@ -73,6 +73,23 @@ class PictureGenerator:
         grid.paste(bim, (4320, 4080))
         grid.save("Output\\" + self.deck.name + ".jpg")
 
+    def createRawPicture(self, deck, c):
+        grid = Image.new('RGB', (4800, 4760))
+        x = 0
+        y = 0
+        for card in deck:
+            cim = Image.open("Input(raw)\\" + card)
+            cim = cim.resize((480, 680), Image.ANTIALIAS)
+            grid.paste(cim, (x, y))
+            x = x + 480
+            if (x == 4800):
+                x = 0
+                y = y + 680
+        bim = Image.open("Input(raw)\\back\\" + os.listdir("Input(raw)\\back")[0])
+        bim = bim.resize((480, 680), Image.ANTIALIAS)
+        grid.paste(bim, (4320, 4080))
+        grid.save("Output\\RawDeck\\Deck " + str(c) + ".jpg")
+
     #Just for manual download purposes
     def pictureDownload(self):
         for card in self.deck.cards:

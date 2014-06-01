@@ -19,7 +19,7 @@ or without the picture. If you choose to keep the picture a folder
 hit enter in the Program to continue.
 
 Usage
-==========
+---------
 
 To create a deck go to tappedout.net and simply create one, or use one of the 
 already created ones. 
@@ -29,10 +29,15 @@ After you've got your deck download the Textfile (.txt) from the Website.
 Place the textfile in the folder "Input" (You can also insert several files 
 in the folder)
 
+If you want you can als insert the raw images into the Folder "input(raw)"
+
 Run MTG.exe
 
 If needed follow the instructions from the commandbox
 
 Get your deck(s) from the "Output" folder
+
+The links, if you wanted to upload the pictures to imgur, will be stored 
+also in the output folder in the file "links<current date>"
 
 ENJOY!
